@@ -2,5 +2,5 @@
 
 public interface IEapService
 {
-    void Calculate();
+    void DoSomething();
 }

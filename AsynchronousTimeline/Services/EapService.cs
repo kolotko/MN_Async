@@ -1,61 +1,70 @@
-﻿using AsynchronousTimeline.Abstractions;
+﻿using System.ComponentModel;
+using AsynchronousTimeline.Abstractions;
 
 namespace AsynchronousTimeline.Services;
 
 public class EapService : IEapService
 {
-    public void Calculate()
+    public void DoSomething()
     {
-        
-        var userNumbers = GetNumberFromUser();
-        
-        // background worker
-        
-        
-    }
-    
-    
-    
-    
-    private (int firstNumber, int secondNumber) GetNumberFromUser()
-    {
-        var firstNumber = 0;
-        var secondNumber = 0;
-        while (true)
-        {
-            Console.Clear();
-            Console.WriteLine("Podal liczbę:");
-            var userInput = Console.ReadLine();
-            firstNumber = ConvertAndValidateUserInputDuringChoosingStrategy(userInput);
-            if (firstNumber == -1)
-            {
-                continue;
-            }
+        Console.Clear();
+        BackgroundWorker worker = new BackgroundWorker();
+        worker.DoWork += Worker_DoWork;
+        worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+        worker.ProgressChanged += Worker_ProgressChanged;
+        worker.WorkerReportsProgress = true;
+        worker.WorkerSupportsCancellation = true;
 
-            break;
+        Console.WriteLine("Rozpoczęcie operacji w tle");
+        worker.RunWorkerAsync();
+
+        Console.WriteLine("Naciśnij 'c' aby zakończyć operację lub dowolny inny klawisz by kontynuować");
+        if (Console.ReadKey(true).KeyChar == 'c')
+        {
+            worker.CancelAsync();
         }
         
-        while (true)
-        {
-            Console.Clear();
-            Console.WriteLine("Podal drugą liczbę:");
-            var userInput = Console.ReadLine();
-            secondNumber = ConvertAndValidateUserInputDuringChoosingStrategy(userInput);
-            if (secondNumber == -1)
-            {
-                continue;
-            }
-            break;
-        }
-
-        return (firstNumber, secondNumber);
+        Console.ReadKey();
     }
     
-    private int ConvertAndValidateUserInputDuringChoosingStrategy(string userInput)
+    private static void Worker_DoWork(object sender, DoWorkEventArgs e)
     {
-        var success = int.TryParse(userInput, out int userInteager);
-        if (success)
-            return userInteager;
-        return -1;
+        BackgroundWorker worker = sender as BackgroundWorker;
+
+        for (int i = 0; i <= 100; i++)
+        {
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                break;
+            }
+
+            // Simulate long-running operation
+            Thread.Sleep(100);
+
+            // Report progress
+            worker.ReportProgress(i);
+        }
+    }
+
+    private static void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    {
+        if (e.Cancelled)
+        {
+            Console.WriteLine("Operacja zakończona niepowodzeniem.");
+        }
+        else if (e.Error != null)
+        {
+            Console.WriteLine("Błąd: " + e.Error.Message);
+        }
+        else
+        {
+            Console.WriteLine("Operacja zakończona pomyślnie.");
+        }
+    }
+
+    private static void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+    {
+        Console.WriteLine($"Progress: {e.ProgressPercentage}%");
     }
 }

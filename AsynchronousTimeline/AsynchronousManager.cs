@@ -22,7 +22,7 @@ public class AsynchronousManager(IApmService apmService, IEapService eapService)
                     apmService.Calculate();
                     break;
                 case 2:
-                    eapService.Calculate();
+                    eapService.DoSomething();
                     break;
             }
             
