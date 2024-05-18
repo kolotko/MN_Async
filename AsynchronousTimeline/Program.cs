@@ -15,4 +15,5 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
             serviceBuilder.AddHostedService<AsynchronousManager>();
             serviceBuilder.AddScoped<IApmService, ApmService>();
             serviceBuilder.AddScoped<IEapService, EapService>();
+            serviceBuilder.AddScoped<ITapService, TapService>();
         });
