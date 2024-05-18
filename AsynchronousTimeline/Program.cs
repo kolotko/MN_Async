@@ -13,7 +13,6 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
         {
 
             serviceBuilder.AddHostedService<AsynchronousManager>();
-            serviceBuilder.AddScoped<IApmServices, ApmServices>();
-            // serviceBuilder.AddSingleton<LongCalcSimulationService>();
-
+            serviceBuilder.AddScoped<IApmService, ApmService>();
+            serviceBuilder.AddScoped<IEapService, EapService>();
         });

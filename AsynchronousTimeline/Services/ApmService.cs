@@ -7,7 +7,7 @@ namespace AsynchronousTimeline.Services;
 /// BeginAdd: Rozpoczyna operację asynchroniczną, uruchamiając zadanie w puli wątków. Zwraca obiekt AsyncAddResult.
 //  EndAdd: Kończy operację, zwracając wynik
 /// </summary>
-public class ApmServices : IApmServices
+public class ApmService : IApmService
 {
     public void Calculate()
     {

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace AsynchronousTimeline;
 
-public class AsynchronousManager(IApmServices apmServices) : IHostedService
+public class AsynchronousManager(IApmService apmService, IEapService eapService) : IHostedService
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -12,13 +12,17 @@ public class AsynchronousManager(IApmServices apmServices) : IHostedService
             Console.Clear();
             Console.WriteLine("Wybierz sposób wykonania asynchroniczności");
             Console.WriteLine("1. Asynchronous Programming Model (APM)");
+            Console.WriteLine("2. Event-based Asynchronous Pattern (EAP)");
 
             var userInput = Console.ReadLine();
             var strategy = ConvertAndValidateUserInputDuringChoosingStrategy(userInput);
             switch (strategy)
             {
                 case 1:
-                    apmServices.Calculate();
+                    apmService.Calculate();
+                    break;
+                case 2:
+                    eapService.Calculate();
                     break;
             }
             

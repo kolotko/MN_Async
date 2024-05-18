@@ -1,6 +1,6 @@
 ﻿namespace AsynchronousTimeline.Abstractions;
 
-public interface IApmServices
+public interface IEapService
 {
     void Calculate();
 }
