@@ -16,4 +16,5 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
             serviceBuilder.AddScoped<IApmService, ApmService>();
             serviceBuilder.AddScoped<IEapService, EapService>();
             serviceBuilder.AddScoped<ITapService, TapService>();
+            serviceBuilder.AddScoped<ITplService, TplService>();
         });

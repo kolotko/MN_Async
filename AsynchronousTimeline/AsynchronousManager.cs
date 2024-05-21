@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace AsynchronousTimeline;
 
-public class AsynchronousManager(IApmService apmService, IEapService eapService, ITapService tapService) : IHostedService
+public class AsynchronousManager(IApmService apmService, IEapService eapService, ITapService tapService, ITplService tplService) : IHostedService
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -14,6 +14,7 @@ public class AsynchronousManager(IApmService apmService, IEapService eapService,
             Console.WriteLine("1. Asynchronous Programming Model (APM)");
             Console.WriteLine("2. Event-based Asynchronous Pattern (EAP)");
             Console.WriteLine("3. Task-base Asynchronous Pattern (EAP)");
+            Console.WriteLine("4. Task Parallel Library (TPL)");
 
             var userInput = Console.ReadLine();
             var strategy = ConvertAndValidateUserInputDuringChoosingStrategy(userInput);
@@ -27,6 +28,9 @@ public class AsynchronousManager(IApmService apmService, IEapService eapService,
                     break;
                 case 3:
                     await tapService.DoSomething();
+                    break;
+                case 4:
+                    await tplService.DoSomething();
                     break;
             }
             
