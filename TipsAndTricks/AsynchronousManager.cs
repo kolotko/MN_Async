@@ -4,7 +4,7 @@ using TipsAndTricks.Utility;
 
 namespace TipsAndTricks;
 
-public class AsynchronousManager(IPriorityService priorityService, IForegroundBackgroundService foregroundBackgroundService) : IHostedService
+public class AsynchronousManager(IPriorityService priorityService, IForegroundBackgroundService foregroundBackgroundService, IConfigureAwaitService configureAwaitService, IElidingService elidingService, IValueTaskService valueTaskService) : IHostedService
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -14,7 +14,9 @@ public class AsynchronousManager(IPriorityService priorityService, IForegroundBa
             Console.WriteLine("Wybierz działanie");
             Console.WriteLine("1. Zmiana priorytetu wątku");
             Console.WriteLine("2. Foreground, Background tasks");
-            // Console.WriteLine("3. Zmiana wątku");
+            Console.WriteLine("3. Configure Await");
+            Console.WriteLine("4. Eliding Service");
+            Console.WriteLine("5. Value Task");
 
             var userInput = Console.ReadLine();
             var strategy = UserInputs.ConvertAndValidateUserInputDuringChoosingStrategy(userInput);
@@ -27,7 +29,16 @@ public class AsynchronousManager(IPriorityService priorityService, IForegroundBa
                     foregroundBackgroundService.Do();
                     break;
                 case 3:
-                    // threadSwitch.SwitchThread();
+                    await configureAwaitService.DoSomething();
+                    break;
+                case 4:
+                    await elidingService.DoSomething();
+                    break;
+                case 5:
+                    var result = await valueTaskService.GetDataAsync();
+                    Console.Clear();
+                    Console.WriteLine(result);
+                    Console.ReadLine();
                     break;
             }
             

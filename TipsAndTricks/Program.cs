@@ -15,7 +15,8 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
             serviceBuilder.AddHostedService<AsynchronousManager>();
             serviceBuilder.AddScoped<IPriorityService, PriorityService>();
             serviceBuilder.AddScoped<IForegroundBackgroundService, ForegroundBackgroundService>();
-            // serviceBuilder.AddScoped<IThreadSwitch, ThreadSwitch>();
-            // serviceBuilder.AddSingleton<LongCalcSimulationService>();
+            serviceBuilder.AddScoped<IConfigureAwaitService, ConfigureAwaitService>();
+            serviceBuilder.AddScoped<IElidingService, ElidingService>();
+            serviceBuilder.AddScoped<IValueTaskService, ValueTaskService>();
 
         });
