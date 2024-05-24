@@ -18,5 +18,6 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
             serviceBuilder.AddScoped<IConfigureAwaitService, ConfigureAwaitService>();
             serviceBuilder.AddScoped<IElidingService, ElidingService>();
             serviceBuilder.AddScoped<IValueTaskService, ValueTaskService>();
+            serviceBuilder.AddScoped<IAsyncEnumerableService, AsyncEnumerableService>();
 
         });

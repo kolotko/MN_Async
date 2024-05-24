@@ -4,7 +4,7 @@ using TipsAndTricks.Utility;
 
 namespace TipsAndTricks;
 
-public class AsynchronousManager(IPriorityService priorityService, IForegroundBackgroundService foregroundBackgroundService, IConfigureAwaitService configureAwaitService, IElidingService elidingService, IValueTaskService valueTaskService) : IHostedService
+public class AsynchronousManager(IPriorityService priorityService, IForegroundBackgroundService foregroundBackgroundService, IConfigureAwaitService configureAwaitService, IElidingService elidingService, IValueTaskService valueTaskService, IAsyncEnumerableService iAsyncEnumerableService) : IHostedService
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -17,6 +17,7 @@ public class AsynchronousManager(IPriorityService priorityService, IForegroundBa
             Console.WriteLine("3. Configure Await");
             Console.WriteLine("4. Eliding Service");
             Console.WriteLine("5. Value Task");
+            Console.WriteLine("6. IAsyncEnumerableService");
 
             var userInput = Console.ReadLine();
             var strategy = UserInputs.ConvertAndValidateUserInputDuringChoosingStrategy(userInput);
@@ -39,6 +40,9 @@ public class AsynchronousManager(IPriorityService priorityService, IForegroundBa
                     Console.Clear();
                     Console.WriteLine(result);
                     Console.ReadLine();
+                    break;
+                case 6:
+                     await iAsyncEnumerableService.PrintRandomNumberAsync();
                     break;
             }
             
