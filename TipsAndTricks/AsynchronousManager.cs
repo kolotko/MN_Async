@@ -4,7 +4,16 @@ using TipsAndTricks.Utility;
 
 namespace TipsAndTricks;
 
-public class AsynchronousManager(IPriorityService priorityService, IForegroundBackgroundService foregroundBackgroundService, IConfigureAwaitService configureAwaitService, IElidingService elidingService, IValueTaskService valueTaskService, IAsyncEnumerableService iAsyncEnumerableService) : IHostedService
+public class AsynchronousManager(
+    IPriorityService priorityService,
+    IForegroundBackgroundService foregroundBackgroundService, 
+    IConfigureAwaitService configureAwaitService, 
+    IElidingService elidingService, 
+    IValueTaskService valueTaskService, 
+    IAsyncEnumerableService iAsyncEnumerableService,
+    ILockService lockService,
+    IMutexService mutexService,
+    ISemaphoreService semaphoreService) : IHostedService
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -18,6 +27,9 @@ public class AsynchronousManager(IPriorityService priorityService, IForegroundBa
             Console.WriteLine("4. Eliding Service");
             Console.WriteLine("5. Value Task");
             Console.WriteLine("6. IAsyncEnumerableService");
+            Console.WriteLine("7. Lock");
+            Console.WriteLine("8. Mutex");
+            Console.WriteLine("9. Semaphore");
 
             var userInput = Console.ReadLine();
             var strategy = UserInputs.ConvertAndValidateUserInputDuringChoosingStrategy(userInput);
@@ -43,6 +55,15 @@ public class AsynchronousManager(IPriorityService priorityService, IForegroundBa
                     break;
                 case 6:
                      await iAsyncEnumerableService.PrintRandomNumberAsync();
+                    break;
+                case 7:
+                    lockService.UseCounterInsideLock();
+                    break;
+                case 8:
+                    mutexService.UseCounterInsideLock();
+                    break;
+                case 9:
+                    semaphoreService.Example();
                     break;
             }
             

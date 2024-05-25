@@ -19,5 +19,8 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
             serviceBuilder.AddScoped<IElidingService, ElidingService>();
             serviceBuilder.AddScoped<IValueTaskService, ValueTaskService>();
             serviceBuilder.AddScoped<IAsyncEnumerableService, AsyncEnumerableService>();
+            serviceBuilder.AddScoped<ILockService, LockService>();
+            serviceBuilder.AddScoped<IMutexService, MutexService>();
+            serviceBuilder.AddScoped<ISemaphoreService, SemaphoreService>();
 
         });
